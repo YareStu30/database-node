@@ -29,6 +29,15 @@ app.get("/posts", async (req, res) => {
     console.log(error);
   }
 });
+app.get("/posts", async (req, res) => {
+  try {
+    const getPosts = await getPost();
+    console.log(getPost);
+    res.json(getPosts);
+  } catch (error) {
+    console.log(error);
+  }
+});
 // Endpoint Post
 app.post("/posts", async (req, res) => {
   try {
@@ -62,4 +71,5 @@ app.delete("/posts/:id", async (req, res) => {
     console.log(error);
   }
 });
+
 app.listen(3000, console.log("SERVIDOR ENCENDIDO"));
