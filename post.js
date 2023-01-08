@@ -7,7 +7,19 @@ const getPost = async () => {
   return rows;
 };
 
+const duplicatePost = async (payload) => {
+  const SQLquery = {
+    text: "SELECT COUNT(*) as NUM FROM posts WHERE titulo=$1 AND img=$2 AND descripcion=$3",
+    values: [payload.titulo, payload.url, payload.descripcion],
+  };
+  const { rows } = await pool.query(SQLquery);
+  return rows;
+};
 const addPost = async (payload) => {
+  const resultDuplicate = await duplicatePost(payload);
+  if (resultDuplicate[0].num > 0) {
+    throw { error: " se duplican los campos" };
+  }
   if (!payload.titulo || !payload.url || !payload.descripcion) {
     throw { error: "Faltan campos requeridos" };
   } else {
@@ -17,7 +29,6 @@ const addPost = async (payload) => {
     const result = await pool.query(consulta, values);
   }
 };
-
 const addLike = async (id) => {
   console.log(id);
   const result = await pool.query(
