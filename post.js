@@ -8,9 +8,14 @@ const getPost = async () => {
 };
 
 const addPost = async (payload) => {
-  const consulta = "INSERT INTO posts (titulo, img, descripcion, likes) VALUES ($1, $2, $3, $4)RETURNING * ";
-  const values = [payload.titulo, payload.url, payload.descripcion, 0];
-  const result = await pool.query(consulta, values);
+  if (!payload.titulo || !payload.url || !payload.descripcion) {
+    throw { error: "Faltan campos requeridos" };
+  } else {
+    const consulta =
+      "INSERT INTO posts (titulo, img, descripcion, likes) VALUES ($1, $2, $3, $4)RETURNING * ";
+    const values = [payload.titulo, payload.url, payload.descripcion, 0];
+    const result = await pool.query(consulta, values);
+  }
 };
 
 const addLike = async (id) => {

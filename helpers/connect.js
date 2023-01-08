@@ -7,7 +7,7 @@ const config = {
   database: "likeme",
   allowExitOnIdle: true,
 };
-// patron Singleton instance
+// singleton
 const Singleton = (() => {
   let instance;
   function createInstance() {

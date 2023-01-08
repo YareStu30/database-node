@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 app.get("/posts", async (req, res) => {
   try {
     const getPosts = await getPost();
-    console.log(getPost);
+    // console.log(getPosts);
     res.json(getPosts);
   } catch (error) {
     console.log(error);
